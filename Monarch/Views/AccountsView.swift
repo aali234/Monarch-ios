@@ -5,7 +5,7 @@ import LinkKit
 import MonarchCore
 
 struct AccountsView: View {
-    @Environment(AppState.self) private var app
+    @SwiftUI.Environment(AppState.self) private var app
     @Query(sort: \AccountRecord.name) private var accounts: [AccountRecord]
     @Query private var connections: [InstitutionRecord]
     @State private var adding = false
@@ -57,8 +57,8 @@ struct AccountsView: View {
 }
 
 struct AddAccountSheet: View {
-    @Environment(AppState.self) private var app
-    @Environment(\.dismiss) private var dismiss
+    @SwiftUI.Environment(AppState.self) private var app
+    @SwiftUI.Environment(\.dismiss) private var dismiss
     @State private var product: LinkProduct = .transactions
     @State private var session: PlaidLinkSession?
     @State private var busy = false
@@ -128,9 +128,9 @@ struct AddAccountSheet: View {
 }
 
 struct ManualAccountSheet: View {
-    @Environment(\.modelContext) private var context
-    @Environment(\.dismiss) private var dismiss
-    @Environment(AppState.self) private var app
+    @SwiftUI.Environment(\.modelContext) private var context
+    @SwiftUI.Environment(\.dismiss) private var dismiss
+    @SwiftUI.Environment(AppState.self) private var app
     @State private var name = ""
     @State private var kind: AccountKind = .checking
     @State private var balance = ""
@@ -168,8 +168,8 @@ struct ManualAccountSheet: View {
 
 struct AccountDetailView: View {
     @Bindable var account: AccountRecord
-    @Environment(\.modelContext) private var context
-    @Environment(AppState.self) private var app
+    @SwiftUI.Environment(\.modelContext) private var context
+    @SwiftUI.Environment(AppState.self) private var app
     @Query(sort: \TransactionRecord.date, order: .reverse) private var transactions: [TransactionRecord]
     @Query private var categories: [CategoryRecord]
     @Query(sort: \SnapshotRecord.date) private var snapshots: [SnapshotRecord]
