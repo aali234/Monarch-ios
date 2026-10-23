@@ -1,0 +1,32 @@
+# Build and capture the iPhone UI without owning a Mac
+
+The app can compile and run on a **GitHub-hosted Mac**. You can start the job and download its screenshots from a Windows/Linux computer or a phone. SwiftUI's iOS runtime and Apple's simulator still run on macOS; the Linux workspace cannot execute them directly.
+
+The checked-in workflow is `.github/workflows/ios-screenshots.yml`. It is **manual only**. It selects an installed stable Xcode 26 on `macos-15`, finds an available iOS 26+ iPhone simulator, builds the app and extensions, runs the screenshot UI test, and uploads PNGs plus the build log/result bundle. No Apple Developer account, bank/email login, or Plaid proxy is needed for these unsigned simulator screenshots. GitHub Actions access and available macOS runner minutes are required.
+
+## Run from GitHub
+
+1. Put the **contents** of the `Monarch` source folder in a GitHub repository, with `.github` at the repository root. Include hidden files from the archive. Keep private credentials and `Local.xcconfig` out of the repository.
+2. Open the repository's **Actions** tab. Choose **iOS build and screenshots**, then **Run workflow** on the branch containing it. For the workflow to appear initially, put it on the default branch.
+3. After the job finishes, open the run and download **iPhone-UI-screenshots**. `manifest.json` maps exported attachment filenames to named screen captures. The **iOS-build-results** artifact includes `ios-screenshots.log`, the `.xcresult` bundle and the simulator/Xcode versions. Screenshots are retained for 7 days and the larger build results for 3 days to reduce storage use.
+4. If compilation or a UI test fails, use the uploaded build log to fix the failure and rerun. Partial screenshots are exported where the result bundle permits it. This workflow has been prepared and locally checked but **has not yet run on GitHub or produced real screenshots** in this session.
+
+Connecting the GitHub integration lets the assistant work with the chosen repository and its CI results. No GitHub account/repository is connected to this workspace yet, and no source has been uploaded. A repository destination is needed before publishing or starting a remote run.
+
+## What the screenshots show
+
+The screenshot test launches the real Debug app with both `--ui-testing` and `--screenshot-testing`. It uses an in-memory SwiftData ledger, and inserts explicit **example** accounts, transactions, budgets, receipts, HSA records and a delivery timeline. No live provider is contacted. These fixtures are excluded from Release builds and are never inserted during an ordinary app launch.
+
+The ten named captures cover Dashboard, Accounts, Transactions, Budget, Cash flow, Receipts, HSA receipts, Shipments, receipt details, and the shipment timeline. Example data is for UI inspection, not proof of a live Plaid connection. Camera, signed App Group/iCloud behavior, Live Activities, email authentication and actual carrier responses retain their separate acceptance checks.
+
+On a Mac or an already provisioned remote Mac, the equivalent command is:
+
+```bash
+./scripts/capture-ios-screenshots.sh
+```
+
+Set `MONARCH_SIMULATOR_UDID` to choose a simulator, or `MONARCH_SIMULATOR_SIGNING=adhoc` to try ad-hoc simulator signing. Before rerunning locally, move the previous `build/Screenshots` directory and `build/Screenshots.xcresult` bundle. The script preserves these outputs instead of deleting them.
+
+The screenshot job runs `ScreenshotTests`. Use `./scripts/test-ios.sh` separately for the complete native unit/UI suite.
+
+References: [GitHub macOS runner image and installed Xcode/simulator versions](https://github.com/actions/runner-images/blob/main/images/macos/macos-15-Readme.md), [manually running a workflow](https://docs.github.com/en/actions/how-tos/manage-workflow-runs/manually-run-a-workflow), [downloading workflow artifacts](https://docs.github.com/en/actions/how-tos/manage-workflow-runs/download-workflow-artifacts).

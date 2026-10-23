@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0"><dict>
+    <key>CFBundleDevelopmentRegion</key><string>en</string>
+    <key>CFBundleDisplayName</key><string>Monarch</string>
+    <key>CFBundleExecutable</key><string>$(EXECUTABLE_NAME)</string>
+    <key>CFBundleIdentifier</key><string>$(PRODUCT_BUNDLE_IDENTIFIER)</string>
+    <key>CFBundleInfoDictionaryVersion</key><string>6.0</string>
+    <key>CFBundleName</key><string>$(PRODUCT_NAME)</string>
+    <key>CFBundlePackageType</key><string>APPL</string>
+    <key>CFBundleShortVersionString</key><string>0.2.0</string>
+    <key>CFBundleVersion</key><string>2</string>
+    <key>GmailClientID</key><string>$(GMAIL_CLIENT_ID)</string>
+    <key>GmailRedirectScheme</key><string>$(GMAIL_REVERSED_CLIENT_ID)</string>
+    <key>CFBundleURLTypes</key><array><dict><key>CFBundleURLSchemes</key><array><string>$(GMAIL_REVERSED_CLIENT_ID)</string></array><key>CFBundleURLName</key><string>Gmail OAuth</string></dict></array>
+    <key>NSCameraUsageDescription</key><string>Scan and auto-crop paper receipts on your device.</string>
+    <key>NSSupportsLiveActivities</key><true/>
+    <key>UIBackgroundModes</key><array><string>fetch</string></array>
+    <key>BGTaskSchedulerPermittedIdentifiers</key><array><string>com.aali.monarch.receipt-refresh</string></array>
+    <key>NSUbiquitousContainers</key><dict><key>iCloud.com.aali.monarch.sandbox</key><dict>
+      <key>NSUbiquitousContainerIsDocumentScopePublic</key><true/>
+      <key>NSUbiquitousContainerName</key><string>Monarch</string>
+      <key>NSUbiquitousContainerSupportedFolderLevels</key><string>Any</string>
+    </dict></dict>
+    <key>LSRequiresIPhoneOS</key><true/>
+    <key>NSFaceIDUsageDescription</key><string>Unlock your private financial ledger.</string>
+    <key>NSAppTransportSecurity</key><dict>
+        <key>NSAllowsLocalNetworking</key><true/>
+        <key>NSExceptionDomains</key><dict>
+            <key>127.0.0.1</key><dict><key>NSExceptionAllowsInsecureHTTPLoads</key><true/></dict>
+            <key>localhost</key><dict><key>NSExceptionAllowsInsecureHTTPLoads</key><true/></dict>
+        </dict>
+    </dict>
+    <key>UIApplicationSceneManifest</key><dict>
+        <key>UIApplicationSupportsMultipleScenes</key><false/>
+    </dict>
+    <key>UILaunchScreen</key><dict/>
+    <key>UISupportedInterfaceOrientations</key><array><string>UIInterfaceOrientationPortrait</string></array>
+    <key>ITSAppUsesNonExemptEncryption</key><false/>
+    <key>UTExportedTypeDeclarations</key><array><dict>
+        <key>UTTypeIdentifier</key><string>app.monarch.encrypted-backup</string>
+        <key>UTTypeDescription</key><string>Encrypted Monarch backup</string>
+        <key>UTTypeConformsTo</key><array><string>public.data</string></array>
+        <key>UTTypeTagSpecification</key><dict>
+            <key>public.filename-extension</key><array><string>monarchbackup</string></array>
+        </dict>
+    </dict></array>
+</dict></plist>

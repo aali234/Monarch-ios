@@ -1,0 +1,5 @@
+// Create an iOS OAuth client for com.aali.monarch.sandbox in Google Cloud.
+GMAIL_CLIENT_ID = YOUR-IOS-CLIENT-ID.apps.googleusercontent.com
+GMAIL_REVERSED_CLIENT_ID = com.googleusercontent.apps.YOUR-IOS-CLIENT-ID
+// For a signed device build, use your own Apple development team.
+DEVELOPMENT_TEAM = YOURTEAMID

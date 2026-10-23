@@ -1,0 +1,96 @@
+Building for debugging...
+[0/13] Write sources
+[2/13] Write swift-version-24593BA9C3E375BF.txt
+[4/22] Compiling MonarchCore Receipts.swift
+[5/22] Compiling MonarchCore Rules.swift
+[6/22] Emitting module MonarchCore
+[7/22] Compiling MonarchCore Mail.swift
+[8/22] Compiling MonarchCore Plaid.swift
+[9/22] Compiling MonarchCore Domain.swift
+[10/22] Compiling MonarchCore Insights.swift
+[11/22] Compiling MonarchCore CSVImport.swift
+[12/22] Compiling MonarchCore Calculations.swift
+[13/24] Compiling MonarchCore Tracking.swift
+[14/24] Compiling MonarchCore ZIPArchive.swift
+[15/25] Wrapping AST for MonarchCore for debugging
+[17/29] Compiling MonarchCoreTests SyncTests.swift
+[18/29] Emitting module MonarchCoreTests
+[19/29] Compiling MonarchCoreTests LedgerTests.swift
+[20/29] Compiling MonarchCoreTests ReceiptTests.swift
+[21/30] /tmp/monarch-receipt-tests/x86_64-unknown-linux-gnu/debug/MonarchCorePackageDiscoveredTests.derived/all-discovered-tests.swift
+[22/30] Write sources
+[23/30] Wrapping AST for MonarchCoreTests for debugging
+[25/33] Emitting module MonarchCorePackageDiscoveredTests
+[26/33] Compiling MonarchCorePackageDiscoveredTests MonarchCoreTests.swift
+[27/33] Compiling MonarchCorePackageDiscoveredTests all-discovered-tests.swift
+[28/34] /tmp/monarch-receipt-tests/x86_64-unknown-linux-gnu/debug/MonarchCorePackageTests.derived/runner.swift
+[29/34] Write sources
+[30/34] Wrapping AST for MonarchCorePackageDiscoveredTests for debugging
+[32/36] Emitting module MonarchCorePackageTests
+[33/36] Compiling MonarchCorePackageTests runner.swift
+[34/37] Wrapping AST for MonarchCorePackageTests for debugging
+[35/37] Write Objects.LinkFileList
+[36/37] Linking MonarchCorePackageTests.xctest
+Build complete! (12.47s)
+Test Suite 'All tests' started at 2026-10-22 15:05:56.253
+Test Suite 'debug.xctest' started at 2026-10-22 15:05:56.255
+Test Suite 'debug.xctest' passed at 2026-10-22 15:05:56.255
+	 Executed 0 tests, with 0 failures (0 unexpected) in 0.0 (0.0) seconds
+Test Suite 'All tests' passed at 2026-10-22 15:05:56.255
+	 Executed 0 tests, with 0 failures (0 unexpected) in 0.0 (0.0) seconds
+◇ Test run started.
+↳ Testing Library Version: 6.2.4 (5ee435b15ad40ec)
+↳ Target Platform: x86_64-unknown-linux-gnu
+◇ Test receiptFallbackParsesEditableFactsAndDoesNotInventEligibility() started.
+◇ Test aliasMatchingIsCaseInsensitiveAndAmbiguityDoesNotSettle() started.
+◇ Test recurringRequiresThreeConsistentOccurrences() started.
+◇ Test hsaYearTotalsAndCSVExcludeIneligibleAndReimbursed() started.
+◇ Test splitRoundingBalancesAndRejectsInvalidSums() started.
+◇ Test zipExportHasValidCRCAndRejectsTraversal() started.
+◇ Test missingDataHasNoHealthScoreAndForecastAppliesMilestoneOnce() started.
+◇ Test sharedChargesAndReimbursementsDoNotInflateSpendingOrIncome() started.
+◇ Test receiptMatchingAutoLinksOnlyUniqueExactPostedCharges() started.
+◇ Test paginationMutationDiscardsPartialBatchAndRestartsOriginalCursor() started.
+◇ Test rulesAreOrderedAndManualLocksWin() started.
+◇ Test replayAndModifiedRemovedAreIdempotent() started.
+◇ Test csvQuotedFieldsIdenticalChargesAndReimport() started.
+◇ Test visibilityRefundsAndTransfers() started.
+◇ Test badCSVRejectsEntireFile() started.
+◇ Test unknownAccountAndUnsafeProxyURLAreRejected() started.
+◇ Test imapSyntaxProtectsCommandsAndPreservesLiteralLengths() started.
+◇ Test trackingDetectionAndRefreshBoundaries() started.
+◇ Test pendingToPostedPreservesLocalEditsAndSurvivesPendingRemoval() started.
+◇ Test thousandCSVRowsParseWithinTheImportBudget() started.
+◇ Test duplicatesUseInstitutionAndOverlapAndHandleMissingMasks() started.
+◇ Test budgetCategoryCarryDoesNotDoubleCountFlexRollover() started.
+◇ Test receiptModelInputIsBoundedByUTF8Bytes() started.
+◇ Test simpleDailyLoanInterestAndNonAmortizingLoan() started.
+◇ Test ordinaryPaginationCollectsAllPages() started.
+◇ Test htmlMIMEQuotedPrintableAndAttachmentsStayOnDevice() started.
+✔ Test splitRoundingBalancesAndRejectsInvalidSums() passed after 0.010 seconds.
+✔ Test aliasMatchingIsCaseInsensitiveAndAmbiguityDoesNotSettle() passed after 0.011 seconds.
+✔ Test missingDataHasNoHealthScoreAndForecastAppliesMilestoneOnce() passed after 0.011 seconds.
+✔ Test zipExportHasValidCRCAndRejectsTraversal() passed after 0.011 seconds.
+✔ Test recurringRequiresThreeConsistentOccurrences() passed after 0.011 seconds.
+✔ Test receiptFallbackParsesEditableFactsAndDoesNotInventEligibility() passed after 0.011 seconds.
+✔ Test paginationMutationDiscardsPartialBatchAndRestartsOriginalCursor() passed after 0.011 seconds.
+✔ Test receiptMatchingAutoLinksOnlyUniqueExactPostedCharges() passed after 0.011 seconds.
+✔ Test rulesAreOrderedAndManualLocksWin() passed after 0.011 seconds.
+✔ Test hsaYearTotalsAndCSVExcludeIneligibleAndReimbursed() passed after 0.011 seconds.
+✔ Test replayAndModifiedRemovedAreIdempotent() passed after 0.011 seconds.
+✔ Test sharedChargesAndReimbursementsDoNotInflateSpendingOrIncome() passed after 0.011 seconds.
+✔ Test badCSVRejectsEntireFile() passed after 0.011 seconds.
+✔ Test imapSyntaxProtectsCommandsAndPreservesLiteralLengths() passed after 0.011 seconds.
+✔ Test visibilityRefundsAndTransfers() passed after 0.011 seconds.
+✔ Test unknownAccountAndUnsafeProxyURLAreRejected() passed after 0.011 seconds.
+✔ Test duplicatesUseInstitutionAndOverlapAndHandleMissingMasks() passed after 0.011 seconds.
+✔ Test trackingDetectionAndRefreshBoundaries() passed after 0.011 seconds.
+✔ Test pendingToPostedPreservesLocalEditsAndSurvivesPendingRemoval() passed after 0.011 seconds.
+✔ Test budgetCategoryCarryDoesNotDoubleCountFlexRollover() passed after 0.011 seconds.
+✔ Test ordinaryPaginationCollectsAllPages() passed after 0.011 seconds.
+✔ Test csvQuotedFieldsIdenticalChargesAndReimport() passed after 0.011 seconds.
+✔ Test htmlMIMEQuotedPrintableAndAttachmentsStayOnDevice() passed after 0.011 seconds.
+✔ Test receiptModelInputIsBoundedByUTF8Bytes() passed after 0.013 seconds.
+✔ Test simpleDailyLoanInterestAndNonAmortizingLoan() passed after 0.014 seconds.
+✔ Test thousandCSVRowsParseWithinTheImportBudget() passed after 0.458 seconds.
+✔ Test run with 26 tests in 0 suites passed after 0.460 seconds.

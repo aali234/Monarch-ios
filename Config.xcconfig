@@ -1,0 +1,4 @@
+// Public iOS OAuth configuration. No Gmail client secret belongs in this app.
+GMAIL_CLIENT_ID =
+GMAIL_REVERSED_CLIENT_ID = com.aali.monarch.gmail-unconfigured
+#include? "Local.xcconfig"
