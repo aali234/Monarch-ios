@@ -16,7 +16,8 @@ struct Card<Content: View>: View {
     let content: Content
     init(@ViewBuilder content: () -> Content) { self.content = content() }
     var body: some View {
-        content.padding(20).frame(maxWidth: .infinity, alignment: .leading)
+        VStack(alignment: .leading, spacing: 0) { content }
+            .padding(20).frame(maxWidth: .infinity, alignment: .leading)
             .background(.white, in: RoundedRectangle(cornerRadius: 24))
     }
 }
