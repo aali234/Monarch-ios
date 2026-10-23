@@ -38,8 +38,8 @@ def configuration(name, settings):
 
 
 def config_list(name, settings, release_extra=None):
-    debug = configuration(name + "-Debug", {**settings, "ONLY_ACTIVE_ARCH": "YES", "SWIFT_OPTIMIZATION_LEVEL": "-Onone", "DEBUG_INFORMATION_FORMAT": "dwarf", "SWIFT_ACTIVE_COMPILATION_CONDITIONS": "DEBUG"})
-    release = configuration(name + "-Release", {**settings, "ONLY_ACTIVE_ARCH": "NO", "SWIFT_OPTIMIZATION_LEVEL": "-O", "DEBUG_INFORMATION_FORMAT": "dwarf-with-dsym", **(release_extra or {})})
+    debug = configuration(name + "-Debug", {**settings, "ONLY_ACTIVE_ARCH": "YES", "ENABLE_TESTABILITY": "YES", "SWIFT_OPTIMIZATION_LEVEL": "-Onone", "DEBUG_INFORMATION_FORMAT": "dwarf", "SWIFT_ACTIVE_COMPILATION_CONDITIONS": "DEBUG"})
+    release = configuration(name + "-Release", {**settings, "ONLY_ACTIVE_ARCH": "NO", "ENABLE_TESTABILITY": "NO", "SWIFT_OPTIMIZATION_LEVEL": "-O", "DEBUG_INFORMATION_FORMAT": "dwarf-with-dsym", **(release_extra or {})})
     return add(name + "-config-list", f"isa = XCConfigurationList; buildConfigurations = ({debug}, {release}); defaultConfigurationIsVisible = 0; defaultConfigurationName = Release;")
 
 
