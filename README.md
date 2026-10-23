@@ -4,6 +4,8 @@ A native SwiftUI / SwiftData personal finance app based on the supplied PRD, wit
 
 The updated PRD's **F45–F56** are implemented in source: receipts, email scanning, camera/Share imports, HSA records and exports, and shipment tracking. Follow [the new feature setup and acceptance guide](docs/RECEIPTS-HSA-SHIPMENTS.md) for service configuration, signing, and native testing.
 
+To connect your own developer account, follow [Plaid Sandbox and FastAPI setup](docs/PLAID-SETUP.md). It covers signup, GitHub secret entry, live API verification without a Mac, and the Render service.
+
 **No Mac of your own?** The included [GitHub cloud build and screenshot workflow](docs/CLOUD-SCREENSHOTS.md) runs Xcode and an iPhone simulator on a hosted Mac. A successful run has compiled the app and extensions and exported ten real simulator captures with explicit example data. See [the verification record](docs/VERIFICATION.md) for the run and platform details.
 
 [View all ten simulator screenshots](docs/screenshots/README.md) · [Successful GitHub build](https://github.com/aali234/Monarch-ios/actions/runs/39900373095)
@@ -65,7 +67,7 @@ Aggregated budgets, cash flow, and net worth are USD-only; other-currency accoun
 
 This project was authored in a **Linux** workspace. The portable Swift package and proxy tests were executed here, and the app was then built and launched on a **GitHub-hosted Mac** with Xcode 26.3 and the iPhone 17 Pro simulator running iOS 26.2.
 
-The latest portable checks pass **26 Swift tests and 16 proxy tests**. The generated ZIP format was independently checked with Python. See [the verification record](docs/VERIFICATION.md) for the precise boundaries of these checks.
+The latest portable checks pass **26 Swift tests and 29 proxy/verifier tests**. The generated ZIP format was independently checked with Python. See [the verification record](docs/VERIFICATION.md) for the precise boundaries of these checks.
 
 **The Apple SDK build and screenshot UI test pass.** The test launches the real app, loads the SwiftData models in memory, navigates ten example-data screens, and saves 1206 × 2622 PNGs. The ten native unit tests and the manual-account UI smoke test were compiled but were not executed by this screenshot-only job. Run the full suite for the separate persistence, backup crypto, Keychain and receipt-vault checks:
 
@@ -90,7 +92,7 @@ See [implementation scope and deviations](docs/IMPLEMENTATION.md) for the remain
 
 Start with the non-OAuth Sandbox institutions above. OAuth banks require a registered **HTTPS redirect URI**, Associated Domains entitlement, and a hosted `apple-app-site-association` file. Set `PLAID_REDIRECT_URI` on the proxy and finish that Apple/Plaid setup before testing OAuth; the unsigned local simulator setup does not provision it for you. See [Plaid iOS Link](https://plaid.com/docs/link/ios/) and [OAuth setup](https://plaid.com/docs/link/oauth/).
 
-The supplied `proxy/render.yaml` can deploy the proxy from its `proxy` directory; set the three secrets in Render’s dashboard. No Render deployment was created here. For hosted use, copy the generated Render app key into the iOS app. Use HTTPS and keep Sandbox controls disabled outside testing. The shared app key is a single-user prototype control, not a replacement for production user authentication/App Attest.
+The root `render.yaml` defines a free Render service with `rootDir: proxy`. Set `PLAID_CLIENT_ID` and the Sandbox `PLAID_SECRET` during Blueprint creation; Render generates `APP_KEY`. Follow [the setup guide](docs/PLAID-SETUP.md) for hosting, remote API verification and pairing the iOS app. No Render deployment or live Plaid verification has been completed yet. The shared app key is a single-user prototype control, not a replacement for production user authentication/App Attest.
 
 ## Project layout
 
@@ -100,7 +102,8 @@ The supplied `proxy/render.yaml` can deploy the proxy from its `proxy` directory
 | `Monarch/` | SwiftUI app, SwiftData models, Keychain, sync writer, encrypted backups |
 | `MonarchShare/`, `MonarchActivity/`, `Shared/` | Extension UI, shared inbox and Activity attributes |
 | `MonarchCore/` | Dependency-free portable Swift logic, API DTOs/client, and tests |
-| `proxy/` | Stateless Plaid/optional tracking server, tests, config, Render blueprint |
+| `proxy/` | Stateless Plaid/optional tracking server, tests, local config and live verifiers |
+| `render.yaml` | Free Render deployment with the proxy root directory and generated app key |
 | `scripts/` | Local launch, tests, and reproducible Xcode-project generation |
 
 After adding/removing source files, regenerate the checked-in project with `python3 scripts/generate-project.py`. No XcodeGen, CocoaPods, or third-party account storage is required.

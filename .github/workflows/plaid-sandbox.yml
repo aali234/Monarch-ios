@@ -1,0 +1,95 @@
+name: FastAPI and Plaid Sandbox
+
+on:
+  push:
+    paths:
+      - 'proxy/**'
+      - 'render.yaml'
+      - '.github/workflows/plaid-sandbox.yml'
+  pull_request:
+    paths:
+      - 'proxy/**'
+      - 'render.yaml'
+      - '.github/workflows/plaid-sandbox.yml'
+  workflow_dispatch:
+    inputs:
+      product:
+        description: Plaid Sandbox product to verify
+        type: choice
+        options:
+          - transactions
+          - liabilities
+          - investments
+        default: transactions
+      proxy_url:
+        description: Optional hosted HTTPS proxy URL; leave blank to start a temporary FastAPI server
+        type: string
+        default: ''
+
+permissions:
+  contents: read
+
+jobs:
+  proxy-tests:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    defaults:
+      run:
+        working-directory: proxy
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+          cache: pip
+          cache-dependency-path: |
+            proxy/requirements.txt
+            proxy/requirements-dev.txt
+      - run: python -m pip install -r requirements-dev.txt
+      - name: Verify proxy behavior with mocked providers
+        run: python -m pytest -q
+
+  live-sandbox:
+    if: github.event_name == 'workflow_dispatch'
+    needs: proxy-tests
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    defaults:
+      run:
+        working-directory: proxy
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Check required repository secrets
+        env:
+          PLAID_CLIENT_ID: ${{ secrets.PLAID_CLIENT_ID }}
+          PLAID_SECRET: ${{ secrets.PLAID_SECRET }}
+          APP_KEY: ${{ secrets.APP_KEY }}
+          PROXY_URL: ${{ inputs.proxy_url }}
+        run: |
+          python - <<'PY'
+          import os
+          names = ('APP_KEY',) if os.getenv('PROXY_URL') else ('PLAID_CLIENT_ID', 'PLAID_SECRET')
+          missing = [name for name in names if not os.getenv(name, '').strip()]
+          if missing:
+              raise SystemExit('Add these repository Actions secrets first: ' + ', '.join(missing))
+          print('Required Sandbox credential entries are present; values are not printed.')
+          PY
+      - run: python -m pip install -r requirements.txt
+      - name: Start FastAPI and verify it against Plaid Sandbox
+        if: inputs.proxy_url == ''
+        env:
+          PLAID_CLIENT_ID: ${{ secrets.PLAID_CLIENT_ID }}
+          PLAID_SECRET: ${{ secrets.PLAID_SECRET }}
+          PLAID_ENV: sandbox
+          SANDBOX_PRODUCT: ${{ inputs.product }}
+        run: python verify_sandbox.py --product "$SANDBOX_PRODUCT"
+      - name: Verify the hosted FastAPI service against Plaid Sandbox
+        if: inputs.proxy_url != ''
+        env:
+          APP_KEY: ${{ secrets.APP_KEY }}
+          PROXY_URL: ${{ inputs.proxy_url }}
+          SANDBOX_PRODUCT: ${{ inputs.product }}
+        run: python sandbox_smoke.py --url "$PROXY_URL" --product "$SANDBOX_PRODUCT"

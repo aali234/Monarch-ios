@@ -4,7 +4,7 @@
 | --- | --- |
 | Portable core, Swift 6.2 official Linux toolchain | 26 tests pass, including receipt/matching/HSA, MIME, tracking and ZIP cases |
 | CSV parsing/identities, 1,000 rows | Under one second in the debug Linux runs; on-device acceptance still pending |
-| FastAPI proxy, Python 3.12 with mocked Plaid/Ship24 transports | 16 tests pass |
+| FastAPI proxy, Python 3.12 with mocked Plaid/Ship24 transports | 29 tests pass, including the live-checker protocol with mocked responses |
 | ZIP interoperability | Swift-produced ZIP opens with Python zipfile; contents and CRC verified |
 | App, extensions, shared sources, and native-test Swift syntax | Swift compiler parse succeeds |
 | Xcode project references/targets/resources | Structurally checked; five targets, all Swift sources included with target membership, all object references resolved |
@@ -15,6 +15,7 @@
 | Visual screen review | All ten PNGs inspected. Dashboard and finance cards keep their contents together and fit the iPhone width. Originals are preserved in [screenshots](screenshots/README.md) with provenance and checksums |
 | Ten native unit tests and manual-account UI smoke test | Compiled by `build-for-testing`; not executed by the screenshot-only filter. Run `scripts/test-ios.sh` for these separate checks |
 | GitHub macOS screenshot workflow | Pass: real native build, simulator launch/test, PNG export, and artifact uploads. Latest run: [39900373095](https://github.com/aali234/Monarch-ios/actions/runs/39900373095), commit `f921e8ad2626782e94d458078e32f25650456f9f` |
+| FastAPI / Plaid GitHub workflow and Render Blueprint | Prepared: mocked tests on backend pushes; manual live Sandbox checks for a temporary or hosted proxy. Deployment awaits Render connection and credential entry |
 | Live Plaid APIs, Link login/update on simulator | Not run: no Plaid credentials/account available to this session |
 | Gmail OAuth, IMAP, Ship24 carrier lookup | Not run: no provider credentials; mock tests are not live-provider verification |
 | Camera, Share signing, iCloud, Foundation Models runtime, live ActivityKit and background task execution | Not run: signed/device verification required; compiling extensions does not exercise these capabilities |

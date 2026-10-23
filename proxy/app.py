@@ -108,6 +108,7 @@ class ProxyFailure(Exception):
 
 
 SAFE_MESSAGES = {
+    "INVALID_API_KEYS": "Check the Plaid client ID and matching secret for the sync server's environment.",
     "ITEM_LOGIN_REQUIRED": "Reconnect this bank to continue syncing.",
     "PRODUCT_NOT_READY": "Plaid is still preparing this product. Refresh again shortly.",
     "TRANSACTIONS_SYNC_MUTATION_DURING_PAGINATION": "Transaction data changed during pagination. Restart the sync.",
