@@ -4,7 +4,14 @@ A native SwiftUI / SwiftData personal finance app based on the supplied PRD, wit
 
 The updated PRD's **F45–F56** are implemented in source: receipts, email scanning, camera/Share imports, HSA records and exports, and shipment tracking. Follow [the new feature setup and acceptance guide](docs/RECEIPTS-HSA-SHIPMENTS.md) for service configuration, signing, and native testing.
 
-**No Mac of your own?** The included [GitHub cloud build and screenshot workflow](docs/CLOUD-SCREENSHOTS.md) runs Xcode and an iPhone simulator on a hosted Mac and exports ten UI captures with explicit example data. It is ready to upload/run in a chosen repository; no remote run has been started yet.
+**No Mac of your own?** The included [GitHub cloud build and screenshot workflow](docs/CLOUD-SCREENSHOTS.md) runs Xcode and an iPhone simulator on a hosted Mac. A successful run has compiled the app and extensions and exported ten real simulator captures with explicit example data. See [the verification record](docs/VERIFICATION.md) for the run and platform details.
+
+[View all ten simulator screenshots](docs/screenshots/README.md) · [Successful GitHub build](https://github.com/aali234/Monarch-ios/actions/runs/39900373095)
+
+<p>
+<a href="docs/screenshots/01-Dashboard-example-data.png"><img src="docs/screenshots/01-Dashboard-example-data.png" width="240" alt="Dashboard with example data"></a>
+<a href="docs/screenshots/02-Accounts-example-data.png"><img src="docs/screenshots/02-Accounts-example-data.png" width="240" alt="Accounts with example data"></a>
+</p>
 
 ## Run on an iPhone simulator
 
@@ -56,11 +63,11 @@ Aggregated budgets, cash flow, and net worth are USD-only; other-currency accoun
 
 ## Verification and remaining gates
 
-This project was authored in a **Linux** workspace. The portable Swift package and proxy tests were executed here. All app/test Swift sources passed compiler **syntax parsing**. The Xcode project and scheme were structurally validated.
+This project was authored in a **Linux** workspace. The portable Swift package and proxy tests were executed here, and the app was then built and launched on a **GitHub-hosted Mac** with Xcode 26.3 and the iPhone 17 Pro simulator running iOS 26.2.
 
 The latest portable checks pass **26 Swift tests and 16 proxy tests**. The generated ZIP format was independently checked with Python. See [the verification record](docs/VERIFICATION.md) for the precise boundaries of these checks.
 
-**The app has not been built with Apple’s iOS SDK or launched in an iPhone simulator in this session.** SwiftData persistence, backup crypto, native UI, and LinkKit runtime behavior therefore remain Apple-platform verification gates. Native tests are included; run them before treating the simulator milestone as verified:
+**The Apple SDK build and screenshot UI test pass.** The test launches the real app, loads the SwiftData models in memory, navigates ten example-data screens, and saves 1206 × 2622 PNGs. The ten native unit tests and the manual-account UI smoke test were compiled but were not executed by this screenshot-only job. Run the full suite for the separate persistence, backup crypto, Keychain and receipt-vault checks:
 
 ```bash
 ./scripts/test.sh

@@ -9,7 +9,9 @@ The checked-in workflow is `.github/workflows/ios-screenshots.yml`. It is **manu
 1. Put the **contents** of the `Monarch` source folder in a GitHub repository, with `.github` at the repository root. Include hidden files from the archive. Keep private credentials and `Local.xcconfig` out of the repository.
 2. Open the repository's **Actions** tab. Choose **iOS build and screenshots**, then **Run workflow** on the branch containing it. For the workflow to appear initially, put it on the default branch.
 3. After the job finishes, open the run and download **iPhone-UI-screenshots**. `manifest.json` maps exported attachment filenames to named screen captures. The **iOS-build-results** artifact includes `ios-screenshots.log`, the `.xcresult` bundle and the simulator/Xcode versions. Screenshots are retained for 7 days and the larger build results for 3 days to reduce storage use.
-4. If compilation or a UI test fails, use the uploaded build log to fix the failure and rerun. Partial screenshots are exported where the result bundle permits it. This workflow has been prepared and locally checked but **has not yet run on GitHub or produced real screenshots** in this session.
+4. If compilation or a UI test fails, use the uploaded build log to fix the failure and rerun. Partial screenshots are exported where the result bundle permits it.
+
+The workflow has successfully built and launched the app on **Xcode 26.3 / iOS 26.2 / iPhone 17 Pro**, producing ten real 1206 × 2622 PNGs. [View the checked-in screenshots](screenshots/README.md) or the [successful run](https://github.com/aali234/Monarch-ios/actions/runs/39900373095). Download the source and open `docs/screenshots/index.html` for an offline gallery. The [verification record](VERIFICATION.md) states which checks the run covers. Compilation took under two minutes and the screenshot test took about two minutes; simulator startup accounts for much of the remaining time.
 
 The project repository is [aali234/Monarch-ios](https://github.com/aali234/Monarch-ios). The GitHub connection needs repository content/workflow write access and Actions write access to upload changes and start a manual run.
 

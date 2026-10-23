@@ -1,0 +1,93 @@
+{
+  "repository": "aali234/Monarch-ios",
+  "run_url": "https://github.com/aali234/Monarch-ios/actions/runs/39900373095",
+  "tested_commit": "f921e8ad2626782e94d458078e32f25650456f9f",
+  "artifact_id": 12478906730,
+  "artifact_sha256": "520ed5da088d20b55a3ddbbdd16e30cf0972b69eaf74b925f9a1698ce2762e50",
+  "xcode": "26.3",
+  "ios": "26.2",
+  "device": "iPhone 17 Pro",
+  "data": "Synthetic examples in an in-memory SwiftData ledger; no live provider connections",
+  "images": [
+    {
+      "file": "01-Dashboard-example-data.png",
+      "width": 1206,
+      "height": 2622,
+      "sha256": "b4476e9020e338cd95846518c650539b34a36df6565827602210ace564b5315b",
+      "original_attachment": "972F13AA-9C65-425E-A262-B7BA8FF1E1AB.png",
+      "timestamp": 1792730095.314
+    },
+    {
+      "file": "02-Accounts-example-data.png",
+      "width": 1206,
+      "height": 2622,
+      "sha256": "296c71feeb93958f3ee2fa7dfaa60914efe19bbad8ec94a84464870b5023d912",
+      "original_attachment": "3185A419-BA44-4B61-A8EE-703747686CB5.png",
+      "timestamp": 1792730100.423
+    },
+    {
+      "file": "03-Transactions-example-data.png",
+      "width": 1206,
+      "height": 2622,
+      "sha256": "ab3e17de04714447eb6cfe7c233ffabfbdab259408d8c7cc3c3cb2280be735d6",
+      "original_attachment": "71DC3DFA-7DD2-4206-A3E6-262FCAE90F7D.png",
+      "timestamp": 1792730105.862
+    },
+    {
+      "file": "04-Budget-example-data.png",
+      "width": 1206,
+      "height": 2622,
+      "sha256": "37f572f91b04d1ac9485bff1dc6db7a0b69efcffea85b98a93cabcc8d277b039",
+      "original_attachment": "F8A7CC47-1255-4773-A246-FDE740254C61.png",
+      "timestamp": 1792730111.254
+    },
+    {
+      "file": "05-Cash-flow-example-data.png",
+      "width": 1206,
+      "height": 2622,
+      "sha256": "df11275c3180deefd0a139bce7593d8dcef32e92ca4d33cd8232efbdbfd6b537",
+      "original_attachment": "4DB26C74-73CB-4579-B7FC-2E96AFBAA42C.png",
+      "timestamp": 1792730116.999
+    },
+    {
+      "file": "06-Receipts-example-data.png",
+      "width": 1206,
+      "height": 2622,
+      "sha256": "a72767667c8e08bb1c1fa3fe822b038d383830676065ac3c0942c48836b50b7c",
+      "original_attachment": "10F2197B-170F-4579-85CE-1282E4C988F4.png",
+      "timestamp": 1792730147.906
+    },
+    {
+      "file": "07-HSA-receipts-example-data.png",
+      "width": 1206,
+      "height": 2622,
+      "sha256": "b3f4191b0c3954389e1a8a18ccebe4811ec867b85501538129e5a9aaff0f830e",
+      "original_attachment": "FECD0A9F-5E22-4533-A7D0-30E1469445DD.png",
+      "timestamp": 1792730169.632
+    },
+    {
+      "file": "08-Shipments-example-data.png",
+      "width": 1206,
+      "height": 2622,
+      "sha256": "2699b498f9072d66197fbcd0bee9c40638cd680e589ea3a88796946e3247a921",
+      "original_attachment": "F3AB9AF7-B06C-40CB-8C6F-84BE0E7E5D9E.png",
+      "timestamp": 1792730184.336
+    },
+    {
+      "file": "09-Receipt-details-example-data.png",
+      "width": 1206,
+      "height": 2622,
+      "sha256": "5af879292c39af2888189de2062323d537dbb91e0b1d76e8cde986f0edf1d465",
+      "original_attachment": "094FA989-7FA2-4916-B5E1-7FC29E479210.png",
+      "timestamp": 1792730153.314
+    },
+    {
+      "file": "10-Shipment-timeline-example-data.png",
+      "width": 1206,
+      "height": 2622,
+      "sha256": "7bf0119e44af0d2727554567c05bdbce2cd2f82bd0fe61383e383f61694fc076",
+      "original_attachment": "E96894C9-A143-4107-9EAF-0BA00DD40E05.png",
+      "timestamp": 1792730188.567
+    }
+  ]
+}
