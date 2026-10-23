@@ -47,6 +47,7 @@ jobs:
           name: iOS-build-results
           path: |
             build/ios-screenshots.log
+            build/Build.xcresult/
             build/Screenshots.xcresult/
             build/simulator-environment.txt
           if-no-files-found: warn

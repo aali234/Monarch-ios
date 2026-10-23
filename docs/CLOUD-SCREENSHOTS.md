@@ -31,7 +31,7 @@ On a Mac or an already provisioned remote Mac, the equivalent command is:
 ./scripts/capture-ios-screenshots.sh
 ```
 
-Set `MONARCH_SIMULATOR_UDID` to choose a simulator, or `MONARCH_SIMULATOR_SIGNING=adhoc` to try ad-hoc simulator signing. Before rerunning locally, move the previous `build/Screenshots` directory and `build/Screenshots.xcresult` bundle. The script preserves these outputs instead of deleting them.
+Set `MONARCH_SIMULATOR_UDID` to choose a simulator, or `MONARCH_SIMULATOR_SIGNING=adhoc` to try ad-hoc simulator signing. Before rerunning locally, move the previous `build/Screenshots` directory and the `build/Build.xcresult` / `build/Screenshots.xcresult` bundles. The script compiles before booting the simulator so SDK errors return sooner, then uses `test-without-building` to capture the UI. Existing result bundles are preserved instead of deleted.
 
 The screenshot job runs `ScreenshotTests`. Use `./scripts/test-ios.sh` separately for the complete native unit/UI suite.
 

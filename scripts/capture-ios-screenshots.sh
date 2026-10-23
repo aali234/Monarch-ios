@@ -35,9 +35,33 @@ if [[ -z "$device_id" ]]; then
   echo 'No available iOS 26+ iPhone simulator was found on this runner.' >&2
   exit 1
 fi
-if [[ -e build/Screenshots.xcresult || -e build/Screenshots ]]; then
-  echo 'Move previous build/Screenshots and build/Screenshots.xcresult outputs before starting another capture.' >&2
+if [[ -e build/Build.xcresult || -e build/Screenshots.xcresult || -e build/Screenshots ]]; then
+  echo 'Move previous build/Build.xcresult, build/Screenshots and build/Screenshots.xcresult outputs before starting another capture.' >&2
   exit 1
+fi
+{
+  xcodebuild -version
+  echo "Selected simulator: $device_id"
+  echo 'Screenshot data: synthetic examples in an in-memory ledger; no live bank, mail, or carrier session.'
+} > build/simulator-environment.txt
+
+signing_flags=(CODE_SIGNING_ALLOWED=NO)
+if [[ "${MONARCH_SIMULATOR_SIGNING:-unsigned}" == adhoc ]]; then
+  signing_flags=(CODE_SIGNING_ALLOWED=YES CODE_SIGN_IDENTITY=- CODE_SIGN_STYLE=Manual)
+fi
+build_args=(-project Monarch.xcodeproj -scheme Monarch -configuration Debug
+  -destination "id=$device_id" -destination-timeout 180
+  -derivedDataPath build/DerivedData -parallel-testing-enabled NO
+  -only-testing:MonarchUITests/ScreenshotTests "${signing_flags[@]}")
+
+# Compile first so SDK errors return without waiting for a cold simulator boot.
+set +e
+xcodebuild "${build_args[@]}" -resultBundlePath build/Build.xcresult build-for-testing 2>&1 | tee build/ios-screenshots.log
+build_status=${PIPESTATUS[0]}
+set -e
+if [[ "$build_status" -ne 0 ]]; then
+  echo 'The native compile failed. Inspect ios-screenshots.log and Build.xcresult.' >&2
+  exit "$build_status"
 fi
 if ! xcrun simctl list devices booted --json | python3 -c 'import json,sys; target=sys.argv[1]; sys.exit(0 if any(row["udid"] == target for rows in json.load(sys.stdin)["devices"].values() for row in rows) else 1)' "$device_id"; then
   xcrun simctl boot "$device_id"
@@ -46,22 +70,10 @@ xcrun simctl bootstatus "$device_id" -b
 xcrun simctl ui "$device_id" appearance light
 xcrun simctl status_bar "$device_id" override --time '9:41' --dataNetwork wifi --wifiMode active --wifiBars 3 --batteryState charged --batteryLevel 100
 trap 'xcrun simctl status_bar "$device_id" clear >/dev/null 2>&1 || true' EXIT
-{
-  xcodebuild -version
-  xcrun simctl list devices booted
-  echo 'Screenshot data: synthetic examples in an in-memory ledger; no live bank, mail, or carrier session.'
-} > build/simulator-environment.txt
+xcrun simctl list devices booted >> build/simulator-environment.txt
 
-signing_flags=(CODE_SIGNING_ALLOWED=NO)
-if [[ "${MONARCH_SIMULATOR_SIGNING:-unsigned}" == adhoc ]]; then
-  signing_flags=(CODE_SIGNING_ALLOWED=YES CODE_SIGN_IDENTITY=- CODE_SIGN_STYLE=Manual)
-fi
 set +e
-xcodebuild -project Monarch.xcodeproj -scheme Monarch -configuration Debug \
-  -destination "id=$device_id" -destination-timeout 180 \
-  -derivedDataPath build/DerivedData -resultBundlePath build/Screenshots.xcresult \
-  -parallel-testing-enabled NO -only-testing:MonarchUITests/ScreenshotTests \
-  "${signing_flags[@]}" test 2>&1 | tee build/ios-screenshots.log
+xcodebuild "${build_args[@]}" -resultBundlePath build/Screenshots.xcresult test-without-building 2>&1 | tee -a build/ios-screenshots.log
 test_status=${PIPESTATUS[0]}
 set -e
 if [[ -d build/Screenshots.xcresult ]]; then
