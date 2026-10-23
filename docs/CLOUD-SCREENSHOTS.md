@@ -11,7 +11,13 @@ The checked-in workflow is `.github/workflows/ios-screenshots.yml`. It is **manu
 3. After the job finishes, open the run and download **iPhone-UI-screenshots**. `manifest.json` maps exported attachment filenames to named screen captures. The **iOS-build-results** artifact includes `ios-screenshots.log`, the `.xcresult` bundle and the simulator/Xcode versions. Screenshots are retained for 7 days and the larger build results for 3 days to reduce storage use.
 4. If compilation or a UI test fails, use the uploaded build log to fix the failure and rerun. Partial screenshots are exported where the result bundle permits it. This workflow has been prepared and locally checked but **has not yet run on GitHub or produced real screenshots** in this session.
 
-Connecting the GitHub integration lets the assistant work with the chosen repository and its CI results. No GitHub account/repository is connected to this workspace yet, and no source has been uploaded. A repository destination is needed before publishing or starting a remote run.
+The project repository is [aali234/Monarch-ios](https://github.com/aali234/Monarch-ios). The GitHub connection needs repository content/workflow write access and Actions write access to upload changes and start a manual run.
+
+## Public source and credentials
+
+The screenshot workflow uses synthetic example data and needs **no API secrets**. It does not read a bank account or mailbox. Personal account, transaction and receipt data stay out of the repository and CI artifacts.
+
+Keep Plaid client/secret, the proxy app key and any Ship24 key in the proxy's environment, with local values in the ignored `proxy/.env`. If a future CI server-integration job needs credentials, use **Repository settings → Secrets and variables → Actions** and inject them only into that job. Never put a Plaid secret in the iOS binary, even through a build environment variable. Gmail's iOS client ID is public configuration; mail access/refresh tokens remain in the phone's Keychain.
 
 ## What the screenshots show
 

@@ -15,3 +15,13 @@ xcuserdata/
 *.ipa
 build/
 Local.xcconfig
+*.p8
+*.p12
+*.pfx
+*.pem
+*.mobileprovision
+*.sqlite*
+*.store*
+ReceiptFiles/
+ReceiptInbox/
+exports/
