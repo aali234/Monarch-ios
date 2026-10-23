@@ -38,8 +38,8 @@ def configuration(name, settings):
 
 
 def config_list(name, settings, release_extra=None):
-    debug = configuration(name + "-Debug", {**settings, "SWIFT_OPTIMIZATION_LEVEL": "-Onone", "DEBUG_INFORMATION_FORMAT": "dwarf", "SWIFT_ACTIVE_COMPILATION_CONDITIONS": "DEBUG"})
-    release = configuration(name + "-Release", {**settings, "SWIFT_OPTIMIZATION_LEVEL": "-O", "DEBUG_INFORMATION_FORMAT": "dwarf-with-dsym", **(release_extra or {})})
+    debug = configuration(name + "-Debug", {**settings, "ONLY_ACTIVE_ARCH": "YES", "SWIFT_OPTIMIZATION_LEVEL": "-Onone", "DEBUG_INFORMATION_FORMAT": "dwarf", "SWIFT_ACTIVE_COMPILATION_CONDITIONS": "DEBUG"})
+    release = configuration(name + "-Release", {**settings, "ONLY_ACTIVE_ARCH": "NO", "SWIFT_OPTIMIZATION_LEVEL": "-O", "DEBUG_INFORMATION_FORMAT": "dwarf-with-dsym", **(release_extra or {})})
     return add(name + "-config-list", f"isa = XCConfigurationList; buildConfigurations = ({debug}, {release}); defaultConfigurationIsVisible = 0; defaultConfigurationName = Release;")
 
 
@@ -51,6 +51,7 @@ plaid_product = add("plaid-product", f"isa = XCSwiftPackageProductDependency; pa
 
 groups = []
 product_refs = []
+shared_file_refs = set()
 base_settings = {
     "CLANG_ENABLE_MODULES": "YES", "SWIFT_VERSION": "5.0", "IPHONEOS_DEPLOYMENT_TARGET": "26.0",
     "SDKROOT": "iphoneos", "TARGETED_DEVICE_FAMILY": "1", "SUPPORTED_PLATFORMS": "iphoneos iphonesimulator",
@@ -65,7 +66,10 @@ def target(name, product_type, extension, folder, dependencies, packages, settin
     for path in sorted(list((ROOT / folder).rglob("*.swift")) + [ROOT / path for path in extra_sources]):
         relative = path.relative_to(ROOT).as_posix()
         file_ref = add("file-" + relative, f"isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = {quote(relative)}; sourceTree = SOURCE_ROOT;")
-        children.append(file_ref)
+        if relative.startswith("Shared/"):
+            shared_file_refs.add(file_ref)
+        else:
+            children.append(file_ref)
         sources.append(add(name + "-source-" + relative, f"isa = PBXBuildFile; fileRef = {file_ref};"))
     if name == "Monarch":
         for relative, kind in [("Monarch/Resources/Assets.xcassets", "folder.assetcatalog"), ("Monarch/Resources/PrivacyInfo.xcprivacy", "text.xml")]:
@@ -115,6 +119,8 @@ target("MonarchTests", "com.apple.product-type.bundle.unit-test", "xctest", "Mon
 target("MonarchUITests", "com.apple.product-type.bundle.ui-testing", "xctest", "MonarchUITests", [app_dependency], [], {
     "PRODUCT_BUNDLE_IDENTIFIER": "com.aali.monarch.sandbox.uitests", "GENERATE_INFOPLIST_FILE": "YES", "TEST_TARGET_NAME": "Monarch",
 })
+if shared_file_refs:
+    groups.append(add("group-Shared", f"isa = PBXGroup; children = {array(sorted(shared_file_refs))}; name = Shared; sourceTree = \"<group>\";"))
 products_group = add("products-group", f"isa = PBXGroup; children = {array(product_refs)}; name = Products; sourceTree = \"<group>\";")
 main_group = add("main-group", f"isa = PBXGroup; children = {array(groups + [products_group, config_file])}; sourceTree = \"<group>\";")
 add("project", f"isa = PBXProject; attributes = {{BuildIndependentTargetsInParallel = YES; LastUpgradeCheck = 2600; TargetAttributes = {{{ref('Monarch-target')} = {{CreatedOnToolsVersion = 26.0;}}; {ref('MonarchTests-target')} = {{CreatedOnToolsVersion = 26.0; TestTargetID = {ref('Monarch-target')};}}; {ref('MonarchUITests-target')} = {{CreatedOnToolsVersion = 26.0; TestTargetID = {ref('Monarch-target')};}};}};}}; buildConfigurationList = {project_config}; compatibilityVersion = \"Xcode 15.0\"; developmentRegion = en; hasScannedForEncodings = 0; knownRegions = (en, Base); mainGroup = {main_group}; packageReferences = ({local_package}, {plaid_package}); productRefGroup = {products_group}; projectDirPath = \"\"; projectRoot = \"\"; targets = ({ref('Monarch-target')}, {ref('MonarchShare-target')}, {ref('MonarchActivity-target')}, {ref('MonarchTests-target')}, {ref('MonarchUITests-target')});")

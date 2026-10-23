@@ -35,6 +35,7 @@ final class ShareViewController: UIViewController {
         let imageType = provider.registeredTypeIdentifiers.first { UTType($0)?.conforms(to: .image) == true }
         let binary = [UTType.pdf.identifier, "public.email-message", imageType].compactMap { $0 }
         if let type = binary.first(where: { provider.hasItemConformingToTypeIdentifier($0) }) {
+            let suggestedName = provider.suggestedName
             _ = try await withCheckedThrowingContinuation { (continuation: CheckedContinuation<URL, Error>) in
                 provider.loadFileRepresentation(forTypeIdentifier: type) { url, error in
                     do {
@@ -43,7 +44,7 @@ final class ShareViewController: UIViewController {
                         guard size <= ReceiptSharedConfig.maximumBytes else { throw CocoaError(.fileReadTooLarge) }
                         // The provider URL is valid only inside this callback.
                         let fileExtension = UTType(type)?.preferredFilenameExtension ?? url.pathExtension
-                        var name = provider.suggestedName ?? url.lastPathComponent
+                        var name = suggestedName ?? url.lastPathComponent
                         if !fileExtension.isEmpty && (name as NSString).pathExtension.lowercased() != fileExtension.lowercased() { name += "." + fileExtension }
                         continuation.resume(returning: try ReceiptSharedConfig.stage(Data(contentsOf: url), name: name))
                     } catch { continuation.resume(throwing: error) }
